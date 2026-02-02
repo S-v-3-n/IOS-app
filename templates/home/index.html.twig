@@ -5,29 +5,21 @@
 
     <div id="form-errors"></div>
 
+    <div data-controller="message">
+        {{ form_start(form, {
+            action: path('app_message'),
+            method: 'POST',
+            attr: { 'data-turbo': 'true', id: 'message_form' }
+        }) }}
+        {{form_row(form.message)}}
+        {{ form_end(form) }}
+        <button id="sender" data-action="click->message#valid">Valider</button>
+    </div>
+
     <div id="messageStream"></div>
     {% block message_stream %}
-        <turbo-stream action="update" targets="#messageStream">
+        <turbo-stream action="append" targets="#messageStream">
             <template>
-
-                <div
-                        data-controller="message"
-                        {# data-sales-product-chart-labels-value="{{dateLabels}}"#}
-                        {# data-sales-product-chart-labels-value="{{chartLabels}}"
-                        data-sales-product-chart-week-total="{{totalWeek}}" #}
-                    >
-                    {{ form_start(form, {
-                        action: path('app_message'),
-                        method: 'POST',
-                        attr: { 'data-turbo': 'true', id: 'message_form' }
-                    }) }}
-
-                    {{form_row(form.message)}}
-
-                    {{ form_end(form) }}
-
-                    <button id="sender" data-action="click->message#valid">Valider</button>
-                </div>
 
                 {% for message in messages %}
                     <p>{{ message }}</p>
